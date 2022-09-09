@@ -1,5 +1,5 @@
 # Yellowfin Integration Example
 
-Documentation: [PDF] (documentation/InstallationTrainingEnvironmentGuide.pdf)
+Documentation: [InstallationTrainingEnvironmentGuide.pdf](documentation/InstallationTrainingEnvironmentGuide.pdf)
 
-Video: [Video] (documentation/IntegrationTrainingEnvironment.mp4)
+Video: [IntegrationTrainingEnvironment.mp4](documentation/IntegrationTrainingEnvironment.mp4)
