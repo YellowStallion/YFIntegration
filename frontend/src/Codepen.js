@@ -9,8 +9,6 @@ import 'react-toastify/dist/ReactToastify.css';
 function Codepen() {
 
 const [html, setHtml] = useState('')
-const [python, setPython] = useState('')
-
 const [css, setCss] = useState('')
 const [js, setJs] = useState('')
 const [srcDoc, setSrcDoc] = useState('')
@@ -83,18 +81,6 @@ function getSignals(){
       signalHtml += '\n</div>'
       console.log(signalHtml)
       setHtml(signalHtml)
-      setPython(`
-def get_signals(access_token):
-  API_ENDPOINT = YELLOWFIN_URL+'/api/signals?limit=10&textFormatType=HTML'
-
-  headers={'Authorization': 'YELLOWFIN ts='+get_time()+', nonce=12345, token='+access_token,
-          'Content-Type': 'application/json',
-          'Accept':'application/vnd.yellowfin.api-v1+json'}
-
-  r = requests.get(url = API_ENDPOINT, headers=headers) 
-  r_json= json.loads(r.text)
-  return r_json      
-      `)
     });
 }
 function loadDash(){
@@ -109,7 +95,7 @@ function loadDash(){
 window.yellowfin.loadDashboardAPI().then(() => { 
 
 window.yellowfin.dashboards.loadDashboard({ 
-  dashboardUUID: "ae52f8f8-fe7e-42a1-a154-1e89644aa2a9", 
+  dashboardUUID: "e7409ff2-f846-44e1-a603-b78ec51b20b9", 
   element:  document.querySelector('#YellowfinDiv'),
             showShare: false,
 }).then(dashboard => { 	});
@@ -130,7 +116,7 @@ function loadReport(){
 <script>
 yellowfin.loadReport({
   element: document.querySelector("#YellowfinDiv"),
-  reportUUID: "32160222-aa12-4d35-8624-2741179c18a6",
+  reportUUID: "80162f66-b23e-4a2b-b209-497a960d96d5",
 });
 </script>
   `)
@@ -174,7 +160,7 @@ function loadIFrameEntry(){
     token = loginToken
   }
   setHtml(`
-<iframe src="`+YELLOWFIN_URL+`/logon.i4?LoginWebserviceId=`+token+`" width="100%" style="height:100vh"></iframe>
+<iframe src="`+YELLOWFIN_URL+`/logon.i4?LoginWebserviceId=`+token+`" width="100%" style="height:100vh" sandbox="allow-popups allow-scripts allow-forms allow-same-origin"></iframe>
   `)
 }
 function loadIFrameBrowse(){
@@ -192,7 +178,7 @@ function loadIFrameSignal(){
     token = loginToken
   }
   setHtml(`
-  <iframe src="`+YELLOWFIN_URL+`/RunSignal.i4?signalUUID=d4238027-f719-41f9-96d0-102b1a6eae6c" width="100%" style="height:100vh"></iframe>
+  <iframe src="`+YELLOWFIN_URL+`/RunSignal.i4?signalUUID=eef7bce8-07d8-4260-a9f8-3c5ca4330b48" width="100%" style="height:100vh"></iframe>
   `)
 }
 function loadIFrameDashboard(){
@@ -242,7 +228,7 @@ return (
       <iframe
         srcDoc={srcDoc}
         title="output"
-        sandbox="allow-same-origin allow-scripts allow-modals"
+        sandbox="allow-same-origin allow-scripts allow-modals allow-forms allow-popups"
         frameBorder="0"
         width="100%"
         height="100%"

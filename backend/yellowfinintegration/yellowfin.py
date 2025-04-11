@@ -1,6 +1,7 @@
 import requests 
 import time
 import json
+import random
 
 
 YELLOWFIN_URL = "http://localhost:8080"
@@ -10,13 +11,16 @@ ADMIN_PASSWORD = "test"
 def get_time():
     return str(int(round(time.time() * 1000)))
 
+def get_nonce():
+    return str(random.randint(0, 2**63 - 1))
+
 
 def get_refresh_token():
     API_ENDPOINT = YELLOWFIN_URL+"/api/refresh-tokens"
 
-    headers={'Authorization': 'YELLOWFIN ts='+get_time()+', nonce=12345',
+    headers={'Authorization': 'YELLOWFIN ts='+get_time()+', nonce='+get_nonce()+'',
             'Content-Type': 'application/json',
-            'Accept':'application/vnd.yellowfin.api-v1+json'}
+            'Accept':'application/vnd.yellowfin.api-v3+json'}
     data = {
         "userName": ADMIN_USER,
         "password": ADMIN_PASSWORD,
@@ -31,9 +35,9 @@ def get_refresh_token():
 def get_access_token(refresh_token):
     API_ENDPOINT = YELLOWFIN_URL+"/api/access-tokens"
     
-    headers={'Authorization': 'YELLOWFIN ts='+get_time()+', nonce=12345, token='+refresh_token,
+    headers={'Authorization': 'YELLOWFIN ts='+get_time()+', nonce='+get_nonce()+', token='+refresh_token,
             'Content-Type': 'application/json',
-            'Accept':'application/vnd.yellowfin.api-v1+json'}
+            'Accept':'application/vnd.yellowfin.api-v3+json'}
 
     r = requests.post(url = API_ENDPOINT, headers=headers) 
     r_json= json.loads(r.text)
@@ -45,9 +49,9 @@ def get_access_token(refresh_token):
 def get_login_token(access_token):
     API_ENDPOINT = YELLOWFIN_URL+"/api/login-tokens"
     
-    headers={'Authorization': 'YELLOWFIN ts='+get_time()+', nonce=12345, token='+access_token,
+    headers={'Authorization': 'YELLOWFIN ts='+get_time()+', nonce='+get_nonce()+', token='+access_token,
             'Content-Type': 'application/json',
-            'Accept':'application/vnd.yellowfin.api-v1+json'}
+            'Accept':'application/vnd.yellowfin.api-v3+json'}
 
     r = requests.post(url = API_ENDPOINT, headers=headers) 
     r_json= json.loads(r.text)
@@ -60,7 +64,7 @@ def get_signals(access_token):
 
     headers={'Authorization': 'YELLOWFIN ts='+get_time()+', nonce=12345, token='+access_token,
             'Content-Type': 'application/json',
-            'Accept':'application/vnd.yellowfin.api-v1+json'}
+            'Accept':'application/vnd.yellowfin.api-v3+json'}
 
     r = requests.get(url = API_ENDPOINT, headers=headers) 
     r_json= json.loads(r.text)
